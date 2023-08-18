@@ -1,0 +1,24 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#nav-calc, main, #desc-block, #input-formula, #btn-calc, #result {
+    margin-top: 8px;
+}
+
+#desc-block {
+    display: flex;
+}
+
+#image-plane {
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+footer div {
+    position: absolute;
+    bottom: 0px;
+    padding: 4px;
+    font-size: 10pt;
+    background-color: white;
+}
