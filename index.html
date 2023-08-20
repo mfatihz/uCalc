@@ -4,32 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header>
-        <div>Simple Math App</div>
-        <div>Area and perimeter Calculator</div>
-    </header>
-    <nav id="nav-calc"></nav>
-    <main>
-        <nav id="nav-plane"></nav>
-        <section id="desc-block">
-            <img src="" alt="image-plane" id="image-plane">
-            <div id="desc-formula"></div>
-        </section>
-        <section id="formula">
-            <table id="input-formula"></table>
-            <section id="btn-action">
-                <button type="submit" id="btn-calc">Calc</button>
-                <button type="submit" id="btn-reset">Reset</button>
+    <section class="card">
+        <header>
+            <div>Basic Geometry App</div>
+            <div>Area and perimeter Calculator</div>
+        </header>
+
+        <nav id="nav-calc"></nav>
+        
+        <main>
+            <nav id="nav-plane">
+                <select name="nav-plane-option" id="nav-plane-option"></select>
+            </nav>
+            <section id="desc-block">
+                <img src="" alt="image-plane" id="image-plane">
+                <div id="desc-formula"></div>
             </section>
-            <div id="result"></div>
-        </section>
-    </main>
+
+            <section id="formula">
+                <table id="input-formula"></table>
+                <section id="btn-action">
+                    <button type="submit" id="btn-calc">Calc</button>
+                    <button type="submit" id="btn-reset">Reset</button>
+                </section>
+                <div id="result"></div>
+                <div id="step"></div>
+            </section>
+        </main>
+    </section>
+
+    <sidebar>
+        <div class="notes">
+            <ul>
+                <li>HTML as basic template</li>
+                <li>element input dicreate otomatis disesuaikan dengan rumus yg dipilih</li>
+                <li>calculation formula can be added </li>
+            </ul>
+        </div>
+    </sidebar>
     <footer>
         <div>mfatihz@gmail.com</div>
     </footer>
-    <script src="js/script.js"></script>
+
+    <script src="js/script.js" type="module"></script>
 </body>
 </html>

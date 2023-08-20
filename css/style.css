@@ -1,13 +1,67 @@
+
+
+  ol, ul {
+    list-style: none;
+  }
+
 body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-#nav-calc, main, #desc-block, #input-formula, #btn-calc, #result {
-    margin-top: 8px;
+header, #nav-calc, #nav-plane {
+    margin: auto;
+    width: fit-content;
+    text-align: center;
 }
 
-#desc-block {
+/* .desc {
+    padding: 8px;
+    background-color: beige;
+    
+} */
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    /* width: 40%; */
+    width: fit-content;
+    /* border-radius: 5px; */
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    padding: 32px;
+    margin: auto;
+    text-align: center;
+    /* background: linear-gradient(
+      217deg,
+      rgba(255, 0, 0, 0.8),
+      rgba(255, 0, 0, 0) 70.71%
+    ),
+    linear-gradient(127deg, rgba(0, 255, 0, 0.8), rgba(0, 255, 0, 0) 70.71%),
+    linear-gradient(336deg, rgba(0, 0, 255, 0.8), rgba(0, 0, 255, 0) 70.71%); */
+    /* background-color: lightgray; */
+}
+  
+.card:hover {
+box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+/* #desc-block {
     display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 8px;
+} */
+
+#nav-calc, main, #btn-calc, #result {
+    margin: auto;
+    margin-top: 8px;
+    width: fit-content;
+    text-align: center;
+}
+
+#nav-plane-option {
+    padding: 4px;
 }
 
 #image-plane {
@@ -15,10 +69,76 @@ body {
     padding-right: 16px;
 }
 
-footer div {
-    position: absolute;
-    bottom: 0px;
+#input-formula{
+    margin: auto;
+    margin-top: 8px;
+    width: fit-content;
+    text-align: center;
+}
+
+input[type="number"]{
     padding: 4px;
+    background: transparent;
+    border: 1px solid black;
+    border-radius: 4px;
+    /* box-shadow: 0 1px 1px 0 rgba(0,0,0,0.5); */
+}
+
+input[type="number"]:focus{
+    outline: 1px solid black;
+    /* outline: none; */
+}
+
+/* Remove arrow from input number*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  /* -webkit-appearance: none;
+  margin: 0; */
+  opacity: 0;
+}
+
+sidebar {
+    margin: auto;
+    margin-top: 8px;
+    width: fit-content;
+    text-align: center;
+}
+
+footer {
+    position:absolute;
+    bottom:0px;
+    left: 50%;
+    width: fit-content;
+    transform: translate(-50%, 0%);
+    margin: 0 auto;
+}
+
+footer div {
+    /* position: absolute; */
+    padding-top: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
     font-size: 10pt;
-    background-color: white;
+    background-color: yellowgreen;
+    text-align: center;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+button {
+    border: none;
+    margin: 4px;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    background-color: #e7e7e7;
+}
+button:hover{
+    box-shadow: rgb(0 0 0 / 50%) 0px 1px 8px;
+    transition: all 0.1s ease 0s;
+}
+button:focus {     
+    background-color:rgb(158, 158, 158);    
 }
