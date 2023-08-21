@@ -1,47 +1,4 @@
-/* const formulas = {
-    "triangle":{
-        "image": "image/Triangle.png",
-        "formula": {
-            "area": {
-                "description": "Luas Segitiga = alas x tinggi / 2",
-                "function": function(base, height) {return base * height / 2;},
-                "output": (base, height) => {return `Luas Segitiga = ${base} x ${height} / 2`},
-            },
-            "perimeter": {
-                "description": "Keliling Segitiga = sisi<sub>A</sub> + sisi<sub>B</sub> + sisi<sub>C</sub>",
-                "function": function(sideA, sideB, sideC) {return sideA + sideB + sideC;},
-                "output": (a, b, c) => {return `Keliling Segitiga = ${a} + ${b} + ${c}`},
-            },
-        },
-    },
-    "rectangle":{
-        "image": "image/Rectangle.png",
-        "formula": {
-            "area": {
-                "description": "Luas Segiempat = panjang x lebar",
-                "function": function(width, height) {return width * height;},
-            },
-            "perimeter": {
-                "description": "Keliling Segiempat = (panjang + lebar) x 2",
-                "function": function(width, height) {return (width + height) * 2;}
-            },
-        },
-    },
-};
-
-const inputLabels = {
-    "base": "alas",
-    "height": "tinggi",
-    "width": "lebar",
-    "sideA": "sisi<sub>A</sub>",
-    "sideB": "sisi<sub>B</sub>",
-    "sideC": "sisi<sub>C</sub>",
-} */
-
-import { formulas, inputLabels } from './formulas.js';
-
-let planeType = Object.keys(formulas)[0];
-let calcType = Object.keys(formulas[Object.keys(formulas)[0]]['formula'])[0];
+import { planes, words } from './planes.js';
 
 const navCalc = document.querySelector("#nav-calc");
 const navPlane = document.querySelector("#nav-plane");
@@ -55,19 +12,31 @@ const result = document.querySelector("#result");
 
 const step = document.querySelector("#step");
 
+let planeType = 0;
+// let planeType = Object.keys(planes)[0];
+let formulaType = Object.keys(planes[Object.keys(planes)[0]]['formula'])[0];
+
 btnCalc.addEventListener("click", calculation);
 
 btnReset.addEventListener("click", () => {
-    resetInput();
-    resetResult();
+    resetInputValues();
+    resetResultValues();
 });
 
-createCalcTypeButtons();
+createFormulaTypeButtons();
 addPlaneTypeOptions();
-createInput();
+updateDisplay();
+
+function getFormulas() {
+    return Object.keys(planes[planeType]["formula"]);
+}
+
+function getFormula() {
+    return planes[planeType]["formula"][formulaType]["function"];
+}
 
 function calculation() {
-    let formula = formulas[planeType]["formula"][calcType]["function"];
+    let formula = getFormula();
     let parameters = getParamNames(formula);
 
     let args = [];
@@ -76,69 +45,85 @@ function calculation() {
     }
 
     result.innerHTML = formula(...args);
-
-
-    console.log(formulas[planeType]["formula"][calcType]["output"]);
-    step.innerHTML = formulas[planeType]["formula"][calcType]["output"](...args);
+    step.innerHTML = planes[planeType]["formula"][formulaType]["output"](...args);
 }
 
-function createCalcTypeButtons() {
-    for(let key in formulas[planeType]["formula"]) {
+function createFormulaTypeButtons() {
+    navCalc.replaceChildren();
+    for(let key in planes[planeType]["formula"]) {
         let btn = document.createElement("button");
-        btn.textContent = getInputLabel(key);
+        // btn.classList.add("btn-action", "capitalize");
+        btn.classList.add("btn-action");
+        btn.textContent = getText(key);
         btn.addEventListener("click", function(){
-            calcType = key;
-            createInput();
+            formulaType = key;
+            updateDisplay();
         });
         navCalc.appendChild(btn);
     }
 }
 function addPlaneTypeOptions() {
-    for(let key in formulas) {
+    for(let i in planes) {
+        let key = planes[i].plane;
         let opt = document.createElement("option");
-        opt.textContent = getInputLabel(key);
-        opt.value = key;
+        opt.textContent = getText(key);
+        opt.value = i;
         navPlaneOption.appendChild(opt);
     }
     navPlaneOption.addEventListener("change", function(){
         planeType = navPlaneOption.value;
-        createInput();
+        formulaType = getFormulas().includes(formulaType) ? formulaType : getFormulas()[0];
+        createFormulaTypeButtons();
+        updateDisplay();
     });
 }
 
-function createInput() {
-    planeImage.src = formulas[planeType]["image"];
-    planeImage.alt = `image-${planeType}`;
-    descFormula.innerHTML = formulas[planeType]["formula"][calcType]["description"];
-    inputTable.replaceChildren();
+function updateDisplay() {
+    updatePicture();
+    updateInputForm();
+    resetResultValues();
+}
 
-    let formula = formulas[planeType]["formula"][calcType]["function"];
+function updatePicture() {
+    planeImage.src = planes[planeType]["image"];
+    planeImage.alt = `image-${planeType}`;
+    descFormula.innerHTML = planes[planeType]["formula"][formulaType]["description"];
+}
+
+function getText(name) {
+    if (name in words) {
+        name = words[name];
+    }
+    return name[0].toUpperCase() + name.substring(1);
+}
+
+function updateInputForm() {
+    let formula = getFormula();
     let parameters = getParamNames(formula);
 
-    for(let paramName of parameters) {
+    inputTable.replaceChildren();
+
+    for(let parameter of parameters) {
         var row = inputTable.insertRow();
+
         var label = row.insertCell(0);
+        // label.classList.add("capitalize");
+        label.innerHTML = getText(parameter);
+
         var input = row.insertCell(1);
-        label.innerHTML = getInputLabel(paramName);
-        input.innerHTML = `<input type="number" id=${paramName} value="2">`;
+        input.innerHTML = `<input type="number" id=${parameter} value="2">`;
     }
-    resetResult();
 }
 
-function getInputLabel(name) {
-    if (name in inputLabels) {return inputLabels[name];}
-    return name;
-}
-
-function resetInput() {
-    let formula = formulas[planeType]["formula"][calcType]["function"];
+function resetInputValues() {
+    let formula = getFormula();
     let parameters = getParamNames(formula);
     for(let i of parameters) {
         document.querySelector(`#${i}`).value = 0;
     }
 }
 
-function resetResult() {
+function resetResultValues() {
     result.innerHTML = null;
     step.innerHTML = null;
 }
@@ -149,8 +134,6 @@ function getParamNames(func) {
 }
 
 /* 
-
-
 import { planes, inputLabels } from './formulas.js';
 
 let planeType = 0;
@@ -172,7 +155,7 @@ const step = document.querySelector("#step");
 btnCalc.addEventListener("click", calculation);
 
 btnReset.addEventListener("click", () => {
-    resetInput();
+    resetInputValue();
     resetResult();
 });
 
@@ -181,7 +164,7 @@ addPlaneTypeOptions();
 createInput();
 
 function getFormula() {
-    return planes[planeType]["formula"][formulaType]["function"];
+    return getFormula();
 }
 
 function calculation() {
@@ -206,7 +189,7 @@ function createFormulaTypeButtons() {
     navCalc.replaceChildren();
     for(let key in getFormulas()) {
         let btn = document.createElement("button");
-        btn.textContent = getInputLabel(key);
+        btn.textContent = getText(key);
         btn.addEventListener("click", function(){
             formulaType = key;
             console.log(formulaType, planeType);
@@ -221,7 +204,7 @@ function addPlaneTypeOptions() {
     for(let i in planes) {
         let key = planes[i].plane;
         let opt = document.createElement("option");
-        opt.textContent = getInputLabel(key);
+        opt.textContent = getText(key);
         opt.value = i;
         navPlaneOption.appendChild(opt);
     }
@@ -245,22 +228,22 @@ function createInput() {
     let formula = getFormula();
     let parameters = getParamNames(formula);
     
-    for(let paramName of parameters) {
+    for(let parameter of parameters) {
         var row = inputTable.insertRow();
         var label = row.insertCell(0);
         var input = row.insertCell(1);
-        label.innerHTML = getInputLabel(paramName);
-        input.innerHTML = `<input type="number" id=${paramName} value="2">`;
+        label.innerHTML = getText(parameter);
+        input.innerHTML = `<input type="number" id=${parameter} value="2">`;
     }
     resetResult();
 }
 
-function getInputLabel(name) {
+function getText(name) {
     if (name in inputLabels) {return inputLabels[name];}
     return name;
 }
 
-function resetInput() {
+function resetInputValue() {
     let formula = getFormula();
     let parameters = getParamNames(formula);
     for(let i of parameters) {
