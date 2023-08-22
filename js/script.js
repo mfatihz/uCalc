@@ -3,7 +3,8 @@ import { planes, words } from './planes.js';
 const navCalc = document.querySelector("#nav-calc");
 const navPlane = document.querySelector("#nav-plane");
 const navPlaneOption = document.querySelector("#nav-plane-option");
-const planeImage = document.querySelector("#image-plane");
+const planeImage = document.querySelector(".box-contents");
+// const planeImage = document.querySelector("#image-plane");
 const descFormula = document.querySelector("#desc-formula");
 const inputTable = document.querySelector("#input-formula");
 const btnCalc = document.querySelector("#btn-calc");
@@ -85,8 +86,11 @@ function updateDisplay() {
 }
 
 function updatePicture() {
-    planeImage.src = planes[planeType]["image"];
-    planeImage.alt = `image-${planeType}`;
+    planeImage.style.backgroundImage = `url("./image/${planes[planeType]['image']}")`;
+    planeImage.style.backgroundSize = "cover";
+    planeImage.style.backgroundRepeat = "no-repeat";
+    // planeImage.src = planes[planeType]["image"];
+    // planeImage.alt = `image-${planeType}`;
     descFormula.innerHTML = planes[planeType]["formula"][formulaType]["description"];
 }
 
