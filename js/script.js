@@ -1,6 +1,6 @@
 import { planes, words } from './planes.js';
 
-const navCalc = document.querySelector("#nav-calc");
+const navCalc = document.querySelector(".nav-calc");
 const navPlane = document.querySelector("#nav-plane");
 const navPlaneOption = document.querySelector("#nav-plane-option");
 const planeImage = document.querySelector(".box-contents");
@@ -50,19 +50,72 @@ function calculation() {
 }
 
 function createFormulaTypeButtons() {
+    // navCalc.replaceChildren();
+    // for(let key in planes[planeType]["formula"]) {
+    //     let btn = document.createElement("button");
+    //     // btn.classList.add("btn-action", "capitalize");
+    //     btn.classList.add("btn-action");
+    //     btn.textContent = getText(key);
+    //     btn.addEventListener("click", function(){
+    //         formulaType = key;
+    //         updateDisplay();
+    //     });
+    //     navCalc.appendChild(btn);
+    // }
     navCalc.replaceChildren();
     for(let key in planes[planeType]["formula"]) {
-        let btn = document.createElement("button");
-        // btn.classList.add("btn-action", "capitalize");
-        btn.classList.add("btn-action");
-        btn.textContent = getText(key);
-        btn.addEventListener("click", function(){
-            formulaType = key;
-            updateDisplay();
-        });
-        navCalc.appendChild(btn);
+        // let btn = document.createElement("button");
+        // // btn.classList.add("btn-action", "capitalize");
+        // btn.classList.add("btn-action");
+        // btn.textContent = getText(key);
+        // btn.addEventListener("click", function(){
+        //     formulaType = key;
+        //     updateDisplay();
+        // });
+        // navCalc.appendChild(btn);
+
+        createRadioElement('formulaType', key, navCalc);
     }
+
+    if (document.querySelector('input[name="formulaType"]')) {
+        document.querySelectorAll('input[name="formulaType"]').forEach((elem) => {
+          elem.addEventListener("change", function(event) {
+            formulaType = event.target.value;
+            updateDisplay();
+          });
+        });
+      }
+    //read this: https://stackoverflow.com/questions/118693/how-do-you-dynamically-create-a-radio-button-in-javascript-that-works-in-all-bro
 }
+
+function createRadioElement(name, value, container) {
+    var radiobox = document.createElement('input');
+    radiobox.type = 'radio';
+    radiobox.id = value;
+    radiobox.value = value;
+    radiobox.name = name;
+    radiobox.checked = (value == formulaType) ? true : false;
+    var label = document.createElement('label')
+    label.htmlFor = value;
+ 
+    var description = document.createTextNode(getText(value));
+    label.appendChild(description);
+    container.appendChild(radiobox);
+    container.appendChild(label);
+    // var radioFragment = document.createElement('div');
+    // radioFragment.innerHTML = radioHtml;
+    // return radioFragment.firstChild;
+}
+
+function createLabel(value) {
+    let el = document.createElement("label");
+    el.setAttribute("for", value);
+    
+    let txt = document.createTextNode(getText(value));
+    el.appendChild(txt);
+    return el;
+}
+
 function addPlaneTypeOptions() {
     for(let i in planes) {
         let key = planes[i].plane;

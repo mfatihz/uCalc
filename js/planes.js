@@ -52,6 +52,7 @@ export const planes = [
 export const words = {
     "rectangle": "segiempat",
     "triangle": "segitiga",
+    "circle": "lingkaran",
     "area": "luas",
     "perimeter": "keliling",
     "base": "alas",
