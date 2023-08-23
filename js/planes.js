@@ -17,31 +17,31 @@ export const planes = [
     },
     {
         "plane": "rectangle",
-        "image": "Rectangle.png",
+        "image": "rectangle.png",
         "formula": {
             "area": {
                 "description": "Luas Segiempat = panjang x lebar",
-                "function": (width, height) => width * height,
-                "output": (width, height) => `Luas Segiempat = ${width} x ${height}`,
+                "function": (length, width) => length * width,
+                "output": (length, width) => `Luas Segiempat = ${length} x ${width}`,
             },
             "perimeter": {
                 "description": "Keliling Segiempat = (panjang + lebar) x 2",
-                "function": (width, height) => (width + height) * 2,
-                "output": (width, height) => `Keliling Segiempat = (${width} + ${height}) x 2`,
+                "function": (length, width) => (length + width) * 2,
+                "output": (length, width) => `Keliling Segiempat = (${length} + ${width}) x 2`,
             },
         },
     },
     {
         "plane": "circle",
-        "image": "Rectangle.png",
+        "image": "circle.png",
         "formula": {
             "area": {
-                "description": "Luas Lingkaran = pi x radius<sup>2</sup>",
+                "description": "Luas Lingkaran = pi x jari-jari<sup>2</sup>",
                 "function": (radius) => Math.PI * (radius ** 2),
                 "output": (radius) => `Luas Lingkaran = ${Math.PI} x ${radius}<sup>2</sup>`,
             },
             "perimeter": {
-                "description": "Keliling Lingkaran = pi x radius x 2",
+                "description": "Keliling Lingkaran = pi x jari-jari x 2",
                 "function": (radius) => Math.PI * radius * 2,
                 "output": (radius) => `Keliling Lingkaran = ${Math.PI} x ${radius} x 2`,
             },
@@ -57,6 +57,7 @@ export const words = {
     "perimeter": "keliling",
     "base": "alas",
     "height": "tinggi",
+    "length": "panjang",
     "radius": "jari-jari",
     "sideA": "sisi<sub>A</sub>",
     "sideB": "sisi<sub>B</sub>",
