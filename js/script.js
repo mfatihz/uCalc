@@ -1,7 +1,7 @@
 import { shapes, words } from './shapes.js';
 
 const navCalc = document.querySelector(".nav-calc");
-const navShapeOption = document.querySelector(".nav-shape-option");
+const navShapeOptions = document.querySelector(".nav-shape-option");
 const shapeImage = document.querySelector(".box-contents");
 const descFormula = document.querySelector(".formula-desc");
 const inputTable = document.querySelector(".form-formula");
@@ -113,14 +113,14 @@ function createRadioBtn(name, value, container, borderRadiusClass = null) {
 
 function addShapeOptions() {
     for(let i in shapes) {
-        let key = shapes[i].shape;
+        let shape = shapes[i].shape;
         let opt = document.createElement("option");
-        opt.textContent = getText(key);
+        opt.textContent = getText(shape);
         opt.value = i;
-        navShapeOption.appendChild(opt);
+        navShapeOptions.appendChild(opt);
     }
-    navShapeOption.addEventListener("change", function(){
-        shapeId = navShapeOption.value;
+    navShapeOptions.addEventListener("change", function(){
+        shapeId = navShapeOptions.value;
         shapeProp = getShapeProperties().includes(shapeProp) ? shapeProp : getShapeProperties()[0];
         createFormulaTypeButtons();
         updateDisplay();
