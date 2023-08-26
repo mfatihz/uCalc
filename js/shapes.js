@@ -1,4 +1,4 @@
-export const shapes = [
+const shapes = [
     {
         "shape": "triangle",
         "image": "Triangle.png",
@@ -49,7 +49,7 @@ export const shapes = [
     },
 ];
 
-export const words = {
+const words = {
     "rectangle": "segiempat",
     "triangle": "segitiga",
     "circle": "lingkaran",

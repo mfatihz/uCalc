@@ -1,5 +1,3 @@
-import { shapes, words } from './shapes.js';
-
 const navCalc = document.querySelector(".nav-calc");
 const navShapeOptions = document.querySelector(".nav-shape-option");
 const shapeImage = document.querySelector(".box-contents");

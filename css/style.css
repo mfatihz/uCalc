@@ -125,8 +125,15 @@ main {
 .result {
   margin: auto;
   margin-top: 16px;
+  height: 16px;
   width: fit-content;
   text-align: center;
+}
+
+.step {
+  height: 16px;
+  margin-top: 8px;
+  margin-bottom: 16px;
 }
 
 .nav-shape-option {
