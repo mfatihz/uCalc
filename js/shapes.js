@@ -1,6 +1,6 @@
-export const planes = [
+export const shapes = [
     {
-        "plane": "triangle",
+        "shape": "triangle",
         "image": "Triangle.png",
         "formula": {
             "area": {
@@ -16,7 +16,7 @@ export const planes = [
         },
     },
     {
-        "plane": "rectangle",
+        "shape": "rectangle",
         "image": "rectangle.png",
         "formula": {
             "area": {
@@ -32,7 +32,7 @@ export const planes = [
         },
     },
     {
-        "plane": "circle",
+        "shape": "circle",
         "image": "circle.png",
         "formula": {
             "area": {

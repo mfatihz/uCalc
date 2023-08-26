@@ -14,18 +14,13 @@
             <div>Area and perimeter Calculator</div>
         </header>
 
-        <!-- <div class="decorator">
-            <div class="nav-decorator"></div> -->
-            <nav class="nav-calc"></nav>
-            <!-- <div class="nav-decorator"></div>
-        </div> -->
+        <nav class="nav-calc"></nav>
 
         <main>
-            <nav id="nav-plane">
-                <select name="nav-plane-option" id="nav-plane-option"></select>
+            <nav>
+                <select name="nav-shape-option" class="nav-shape-option"></select>
             </nav>
-            <section id="desc-block">
-                <!-- <img src="" alt="image-plane" id="image-plane"> -->
+            <section class="desc-container">
                 <div class="box">
                     <div class="hover-point"></div>
                     <div class="hover-point"></div>
@@ -39,18 +34,18 @@
                   </div>
             </section>
             
-            <div id="desc-formula"></div>
+            <div class="formula-desc"></div>
 
-            <section id="formula">
-                <table id="input-formula"></table>
+            <section class="calculation">
+                <table class="form-formula"></table>
 
                 <section>
-                    <button type="submit" id="btn-calc">Calc</button>
-                    <button type="submit" id="btn-reset">Reset</button>
+                    <button type="submit" id="btn-calc" class="btn-act">Calc</button>
+                    <button type="submit" id="btn-reset" class="btn-act">Reset</button>
                 </section>
 
-                <div id="result"></div>
-                <div id="step"></div>
+                <div class="result"></div>
+                <div class="step"></div>
             </section>
         </main>
     </section>
@@ -58,9 +53,8 @@
     <sidebar>
         <div class="notes">
             <ul>
-                <li>Rumus kalkulasi bisa ditambahkan</li>
-                <li>element input dicreate otomatis disesuaikan dengan rumus yg dipilih</li>
                 <li>https://markheath.net/post/customize-radio-button-css</li>
+                <li><b>read this: https://stackoverflow.com/questions/118693/how-do-you-dynamically-create-a-radio-button-in-javascript-that-works-in-all-bro</b>b></li>
             </ul>
         </div>
     </sidebar>

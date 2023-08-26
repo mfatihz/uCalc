@@ -1,51 +1,46 @@
-import { planes, words } from './planes.js';
+import { shapes, words } from './shapes.js';
 
 const navCalc = document.querySelector(".nav-calc");
-const navPlane = document.querySelector("#nav-plane");
-const navPlaneOption = document.querySelector("#nav-plane-option");
-const planeImage = document.querySelector(".box-contents");
-// const planeImage = document.querySelector("#image-plane");
-const descFormula = document.querySelector("#desc-formula");
-const inputTable = document.querySelector("#input-formula");
+const navShapeOption = document.querySelector(".nav-shape-option");
+const shapeImage = document.querySelector(".box-contents");
+const descFormula = document.querySelector(".formula-desc");
+const inputTable = document.querySelector(".form-formula");
 const btnCalc = document.querySelector("#btn-calc");
 const btnReset = document.querySelector("#btn-reset");
-const result = document.querySelector("#result");
+const result = document.querySelector(".result");
 
-const step = document.querySelector("#step");
+const step = document.querySelector(".step");
 
-let planeType = 0;
-// let planeType = Object.keys(planes)[0];
-//let formulaType = Object.keys(planes[Object.keys(planes)[0]]['formula'])[0];
-let formulaType = Object.keys(planes[0]['formula'])[0];
+let shapeId = 0;
+let shapeProp = getShapeProperties()[0];
+
+createFormulaTypeButtons();
+addShapeOptions();
+updateDisplay();
 
 btnCalc.addEventListener("click", showCalculation);
 
 btnReset.addEventListener("click", () => {
     resetInputValues();
-    resetResultValues();
+    resetResult();
 });
 
-createFormulaTypeButtons();
-addPlaneTypeOptions();
-updateDisplay();
-
-function getFormulas() {
-    return Object.keys(planes[planeType]["formula"]);
+function getShapeProperties() {
+    return Object.keys(shapes[shapeId]["formula"]);
 }
 
 function getFormula() {
-    return planes[planeType]["formula"][formulaType]["function"];
+    return shapes[shapeId]["formula"][shapeProp]["function"];
 }
 
 function showCalculation() {
     try {
         const calculation = calculate();
-        console.log(calculation);
         result.innerHTML = calculation.result;
-        step.innerHTML = calculation["desc"];
+        step.innerHTML = calculation.desc;
     } catch (e) {
         console.error(e);
-        resetResultValues();
+        resetResult();
         result.innerHTML = "Error!"
     }
 }
@@ -66,83 +61,87 @@ function calculate() {
     
     return {
         result: formula(...args),
-        "desc": planes[planeType]["formula"][formulaType]["output"](...args),
+        desc: shapes[shapeId]["formula"][shapeProp]["output"](...args),
     };
 }
 
 function createFormulaTypeButtons() {
-    // navCalc.replaceChildren();
-    // for(let key in planes[planeType]["formula"]) {
-    //     let btn = document.createElement("button");
-    //     // btn.classList.add("btn-action", "capitalize");
-    //     btn.classList.add("btn-action");
-    //     btn.textContent = getText(key);
-    //     btn.addEventListener("click", function(){
-    //         formulaType = key;
-    //         updateDisplay();
-    //     });
-    //     navCalc.appendChild(btn);
-    // }
     navCalc.replaceChildren();
 
-    for(let key in planes[planeType]["formula"]) {
-        createRadioBtn('formulaType', key, navCalc);
+    const shapeProps = getShapeProperties();
+
+    for(let i=0; i < shapeProps.length; i++) {
+        let borderRadiusClass = null;
+        if (i == 0) {
+            borderRadiusClass = 'bottom-left-radius';
+        } else if (i === shapeProps.length-1) {
+            borderRadiusClass = 'bottom-right-radius';
+        }
+        createRadioBtn("shapePropsBtn", shapeProps[i], navCalc, borderRadiusClass);
     }
 
-    if (document.querySelector('input[name="formulaType"]')) {
-        document.querySelectorAll('input[name="formulaType"]').forEach((el) => {
+    if (document.querySelector('input[name="shapePropsBtn"]')) {
+        document.querySelectorAll('input[name="shapePropsBtn"]').forEach((el) => {
           el.addEventListener("change", function(event) {
-            formulaType = event.target.value;
+            shapeProp = event.target.value;
             updateDisplay(true);
           });
         });
     }
-    //read this: https://stackoverflow.com/questions/118693/how-do-you-dynamically-create-a-radio-button-in-javascript-that-works-in-all-bro
 }
 
-function createRadioBtn(name, value, container) {
+function createRadioBtn(name, value, container, borderRadiusClass = null) {
     let radiobox = document.createElement('input');
     radiobox.type = 'radio';
     radiobox.id = value;
     radiobox.value = value;
     radiobox.name = name;
-    radiobox.checked = (value == formulaType) ? true : false;
+    radiobox.checked = (value == shapeProp) ? true : false;
+
     let label = document.createElement('label')
+    if (borderRadiusClass != null) {
+        label.classList.add(borderRadiusClass);
+    }
     label.htmlFor = value;
- 
+
     let description = document.createTextNode(getText(value));
     label.appendChild(description);
+    
     container.appendChild(radiobox);
     container.appendChild(label);
 }
 
-function addPlaneTypeOptions() {
-    for(let i in planes) {
-        let key = planes[i].plane;
+function addShapeOptions() {
+    for(let i in shapes) {
+        let key = shapes[i].shape;
         let opt = document.createElement("option");
         opt.textContent = getText(key);
         opt.value = i;
-        navPlaneOption.appendChild(opt);
+        navShapeOption.appendChild(opt);
     }
-    navPlaneOption.addEventListener("change", function(){
-        planeType = navPlaneOption.value;
-        formulaType = getFormulas().includes(formulaType) ? formulaType : getFormulas()[0];
+    navShapeOption.addEventListener("change", function(){
+        shapeId = navShapeOption.value;
+        shapeProp = getShapeProperties().includes(shapeProp) ? shapeProp : getShapeProperties()[0];
         createFormulaTypeButtons();
         updateDisplay();
     });
 }
 
 function updateDisplay(keepValues = false) {
-    updateDescriptions();
+    updateImage();
+    updateFormulaDescription();
     updateInputForm(keepValues);
-    resetResultValues();
+    resetResult();
 }
 
-function updateDescriptions() {
-    planeImage.style.backgroundImage = `url("./image/${planes[planeType]['image']}")`;
-    planeImage.style.backgroundSize = "cover";
-    planeImage.style.backgroundRepeat = "no-repeat";
-    descFormula.innerHTML = planes[planeType]["formula"][formulaType]["description"];
+function updateImage() {
+    shapeImage.style.backgroundImage = `url("./image/${shapes[shapeId]['image']}")`;
+    shapeImage.style.backgroundSize = "cover";
+    shapeImage.style.backgroundRepeat = "no-repeat";
+}
+
+function updateFormulaDescription() {
+    descFormula.innerHTML = shapes[shapeId]["formula"][shapeProp]["description"];
 }
 
 function getText(name) {
@@ -159,7 +158,7 @@ function updateInputForm(keepValues = false) {
     let oldValues = {};
     
     if (keepValues) {
-        oldValues = getOldValues();
+        oldValues = getValues();
     }
 
     inputTable.replaceChildren();
@@ -171,18 +170,17 @@ function updateInputForm(keepValues = false) {
         labelCell.innerHTML = getText(parameter);
 
         let inputCell = row.insertCell(1);
-        let oldValue = (keepValues && oldValues.hasOwnProperty(parameter)) ? oldValues[parameter] : '';
+        let oldValue = (keepValues && oldValues.hasOwnProperty(parameter)) ? oldValues[parameter] : 0;
         let inputHTML = `<input type="number" id=${parameter} value=${oldValue}>`;
 
         inputCell.innerHTML = inputHTML;
     }
 }
 
-function getOldValues() {
+function getValues() {
     let formula = getFormula();
     let parameters = getParamNames(formula);
-    // console.log("A",parameters);
-    //console.log(funStr.slice(funStr.indexOf('(')+1, funStr.indexOf(')')).match(/([^\s,]+)/g));
+    
     let oldValues = {};
 
     for(let i of parameters) {
@@ -190,7 +188,7 @@ function getOldValues() {
             oldValues[i] = document.querySelector(`#${i}`).value;
         }
     }
-    console.log("UPD", oldValues);
+
     return oldValues;
 }
 
@@ -202,9 +200,9 @@ function resetInputValues() {
     }
 }
 
-function resetResultValues() {
-    result.innerHTML = null;
-    step.innerHTML = null;
+function resetResult() {
+    result.innerHTML = "";
+    step.innerHTML = "";
 }
 
 function getParamNames(func) {
