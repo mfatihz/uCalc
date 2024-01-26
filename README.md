@@ -1,4 +1,4 @@
-Area and perimeter calculator demo
+#Area and perimeter calculator demo
 
 Language: HTML, CSS, Javascript
 
